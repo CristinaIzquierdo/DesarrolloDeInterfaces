@@ -23,7 +23,19 @@ public class Client {
 	public Client() {
 	}
 	
+	
+	
 		
+	public Client(int codigoCliente, String nombreCliente, String apellidoContacto, String telefono) {
+		this.codigoCliente = codigoCliente;
+		this.nombreCliente = nombreCliente;
+		this.apellidoContacto = apellidoContacto;
+		this.telefono = telefono;
+	}
+
+
+
+
 	public Client(int codigoCliente, String nombreCliente, String nombreContacto, String apellidoContacto,
 			String telefono, String fax, String lineaDireccion1, String lineaDireccion2, String ciudad, String region,
 			String pais, String codigoPostal, int codigoEmpleadoRepVentas, int limiteCredito) {

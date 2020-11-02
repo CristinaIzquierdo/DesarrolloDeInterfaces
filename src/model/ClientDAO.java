@@ -93,11 +93,10 @@ public class ClientDAO implements ICRUD{
 		
 			return answer;
 
-
 	}
 
 	@Override
-	public String modify(Object obj) {
+	public String update(Object obj) {
 		Client client = (Client) obj;
 		Connection connection;
 		PreparedStatement pst;
@@ -114,7 +113,6 @@ public class ClientDAO implements ICRUD{
 			pst = connection.prepareStatement(sql); 
 			
 			//le asigna estos valores a la consulta sql
-		
 			pst.setString(1, client.getNombreCliente());
 			pst.setString(2, client.getNombreContacto());
 			pst.setString(3, client.getApellidoContacto());
@@ -131,13 +129,13 @@ public class ClientDAO implements ICRUD{
 			pst.setInt(14, client.getCodigoCliente());
 			
 			int fields = pst.executeUpdate(); //ejecuta la consulta sql e indica cuantas filas tiene 
-			//!! se usa executeUpdate() porque hay una modificacion en la tabla (insert)
+			//!! se usa executeUpdate() porque hay una modificacion en la tabla (update)
 			
 			answer = "Se modificaron "+ fields + " elementos.";
 			
 			connection.close(); // se cierra la conexion
 					
-			
+			//ClassNotFoundException por si no puede cargar el driver; SQLException erro de conexion a la base de datos
 			}catch(ClassNotFoundException | SQLException e) {	
 			}
 		
@@ -233,7 +231,28 @@ public class ClientDAO implements ICRUD{
 		
 		return data;
 
+	}
+	
+	public Client getClient(int codigo) {
+		List<Client> data = new ArrayList<>();
+		for(Client client: data) {
+			if(client.getCodigoCliente() == codigo) {
+				return client;
+			}
+		}
+		return null;
+	}
 		
+	
+	
+	public boolean possibleDataDuplication(Client client) {
+		List<Client> data = new ArrayList<>();
+		for (Client c: data) {
+			if (client.getNombreCliente().equals(c.getApellidoContacto()) || client.getApellidoContacto().equals(c.getApellidoContacto()) || client.getTelefono().equals(c.getTelefono())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

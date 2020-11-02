@@ -1,21 +1,33 @@
 package modelBuilder;
 
-import exception.DuplicatedItemException;
+
+import exception.DuplicatedException;
+import exception.PossibleClientDataDuplication;
 import model.ClientDAO;
 import uml.Client;
 
 public class ClientBuilder {
 	
-	public static Client build(int codigoCliente, String nombreCliente, String nombreContacto, String apellidoContacto,
-			String telefono, String fax, String lineaDireccion1, String lineaDireccion2, String ciudad, String region,
-			String pais, String codigoPostal, int codigoEmpleadoRepVentas, int limiteCredito) throws DuplicatedItemException{
+	public static Client build(int codigoCliente, 
+							   String nombreCliente, 
+							   String apellidoContacto,
+							   String telefono) throws DuplicatedException, PossibleClientDataDuplication{
 
+		Client client = new Client(codigoCliente, 
+								   nombreCliente, 
+								   apellidoContacto,
+								   telefono);
+		
 		ClientDAO clientDao = new ClientDAO();
 				
-		if (!clientDao.read().get(codigoCliente).equals(null)) {
-			throw new DuplicatedItemException();
+		if (!(clientDao.getClient(codigoCliente) == null)) {
+			throw new DuplicatedException(client);
 		}
-		return null;
+		
+		if ((clientDao.possibleDataDuplication(client))) {
+			throw new PossibleClientDataDuplication(client);
+		}
+		return client;
 	} 
 	
 

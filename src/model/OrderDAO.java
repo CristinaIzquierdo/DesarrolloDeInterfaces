@@ -86,7 +86,7 @@ public class OrderDAO implements ICRUD{
 	}
 
 	@Override
-	public String modify(Object obj) {
+	public String update(Object obj) {
 		Order order = (Order) obj;
 		Connection connection;
 		PreparedStatement pst;
@@ -110,7 +110,7 @@ public class OrderDAO implements ICRUD{
 			pst.setInt(7, order.getCodigoPedido());
 			
 			int fields = pst.executeUpdate(); //ejecuta la consulta sql e indica cuantas filas tiene 
-			//!! se usa executeUpdate() porque hay una modificacion en la tabla (insert)
+			//!! se usa executeUpdate() porque hay una modificacion en la tabla (update)
 			
 			answer = "Se modificaron "+ fields + " elementos.";
 			
@@ -195,6 +195,18 @@ public class OrderDAO implements ICRUD{
 		
 		return data;
 	}
+	
+	public Order getOrder(int codigoPedido) {
+		List<Order> data = new ArrayList<>();
+		for (Order order: data) {
+			if(order.getCodigoPedido() == codigoPedido) {
+				return order;
+			}
+		}
+		
+		return null;
+	}
+	
 	
 
 }
