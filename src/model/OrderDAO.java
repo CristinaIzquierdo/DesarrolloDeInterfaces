@@ -47,6 +47,7 @@ public class OrderDAO implements ICRUD{
 		//ClassNotFoundException por si no puede cargar el driver; SQLException erro de conexion a la base de datos
 		}catch(ClassNotFoundException | SQLException e) {	
 		}
+		
 		return answer;
 	
 	}
@@ -160,7 +161,7 @@ public class OrderDAO implements ICRUD{
 	}
 
 	@Override
-	public List<?> filter(String field, String searchCriteria) {
+	public List<Order> filter(String field, String searchCriteria) {
 		List<Order> data = new ArrayList<>();
 		Connection connection;
 		PreparedStatement pst;
